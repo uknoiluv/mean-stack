@@ -20,6 +20,7 @@ import _Auth from '../components/auth/auth.module';
 import account from './account';
 import admin from './admin';
 import navbar from '../components/navbar/navbar.component';
+import weather from '../components/weather-widget/weather-widget.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
 import constants from './app.constants';
@@ -30,7 +31,7 @@ import './app.scss';
 
 angular.module('reposApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
-  socket, util
+  socket, util, weather
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

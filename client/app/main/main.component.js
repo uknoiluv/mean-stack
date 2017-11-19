@@ -6,7 +6,7 @@ export class MainController {
   $http;
   socket;
   awesomeThings = [];
-  newThing = '';
+  values = {};
 
   /*@ngInject*/
   constructor($http, $scope, socket) {
@@ -27,11 +27,9 @@ export class MainController {
   }
 
   addThing() {
-    if(this.newThing) {
-      this.$http.post('/api/things', {
-        name: this.newThing
-      });
-      this.newThing = '';
+    if(this.values.golfers) {
+      this.$http.post('/api/things', this.values);
+      this.values = {};
     }
   }
 

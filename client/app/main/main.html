@@ -1,28 +1,56 @@
-<header class="hero-unit" id="banner">
+<!-- <header class="hero-unit" id="banner">
   <div class="container">
     <h1>'Allo, 'Allo!</h1>
     <p class="lead">Kick-start your next web app with Angular Fullstack</p>
     <img src="assets/images/yeoman.png" alt="I'm Yeoman">
   </div>
-</header>
+</header> -->
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
+    <form class="thing-form col-lg-8 row">
+      <div class="lead">Let's golfinSF!</div>
+      <div class="col-lg-3"> Selection </div>
+      <div class="col-lg-5">
+        <p class="input-group">
+          <label for="golfers">Number of golfers:
+            <input type="text" id="golfers" class="form-control" ng-model="$ctrl.values.golfers">
+          </label>
+          <label for="clubs">Club rentals:
+            <input type="text" id="clubs" class="form-control" ng-model="$ctrl.values.clubs">
+          </label>
+          <button type="submit" class="btn btn-primary" ng-click="$ctrl.submit()">Submit</button>
+          <!-- <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="$ctrl.newThing"> -->
+          <!-- <span class="input-group-btn" > -->
+          <!-- <button type="submit" class="btn btn-primary" ng-click="$ctrl.addThing()">Add New</button> -->
+          <!-- </span> -->
+        </p>
+      </div>
+    </form>
+    <div class="col-lg-4">
+      <div>
+        Need help booking?
+        </br>
+        Phone
+      </div>
+      <div>
+        Your order
+        <div>
+          <div>
+            # of Golfers: {{$ctrl.values.golfers}}
+          </div>
+          <div>
+            Club Rentals: {{$ctrl.values.clubs}}
+          </div>
+        </div>
+      </div>
+      <!-- <h1 class="page-header">Features:</h1>
+      <ul class="nav nav-tabs nav-stacked col-md-3 col-lg-3 col-sm-4" ng-repeat="thing in $ctrl.awesomeThings">
         <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="$ctrl.deleteThing(thing)">&times;</button></a></li>
-      </ul>
+      </ul> -->
     </div>
+
   </div>
 
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="$ctrl.newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="$ctrl.addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
+
 </div>
