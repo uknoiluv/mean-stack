@@ -12,6 +12,7 @@
 
 import jsonpatch from 'fast-json-patch';
 import Thing from './thing.model';
+import mailer from '../../components/mailer';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -81,9 +82,11 @@ export function show(req, res) {
 
 // Creates a new Thing in the DB
 export function create(req, res) {
-  return Thing.create(req.body)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+  console.log('hit on the create');
+  mailer(req.body);
+  // return Thing.create(req.body)
+  //   .then(respondWithResult(res, 201))
+  //   .catch(handleError(res));
 }
 
 // Upserts the given Thing in the DB at the specified ID

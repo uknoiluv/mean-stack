@@ -22,6 +22,57 @@
   background: #4393B9;
 }
 
-.navbar-text {
-  margin-left: 15px;
+.main-container {
+  border: 1px solid #57AC1F;
+}
+
+.main-container-form {
+  background-color: #E8FEC5;
+}
+
+.main-container-form-input {
+  padding: 10px 5px;
+}
+
+.main-container-form-input-sub {
+  padding: 5px 0px;
+  #specialRequest {
+    width: 100%;
+  }
+}
+
+.main-btn {
+  display: block;
+  border: 2px solid #57AC1F;
+  margin: 10px 5px;
+  width: 100%;
+}
+
+.main-container-form-title {
+  font-size: 20px;
+}
+
+.main-send-btn {
+  width: 100%;
+  font-size: 20px;
+}
+
+.main-help,.main-order-summary{
+  margin: 10px;
+}
+
+.main-help {
+  font-size: 15px;
+}
+
+.main-order-summary-title {
+  font-size: 18px;
+  color: #1AAF54;
+}
+
+.main-timePicker {
+  a.btn {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
 }

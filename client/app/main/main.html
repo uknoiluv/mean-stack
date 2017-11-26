@@ -6,41 +6,179 @@
   </div>
 </header> -->
 
-<div class="container">
+<div class="container main-container">
   <div class="row">
-    <form class="thing-form col-lg-8 row">
+    <form class="thing-form col-lg-9 row">
       <div class="lead">Let's golfinSF!</div>
-      <div class="col-lg-3"> Selection </div>
-      <div class="col-lg-5">
-        <p class="input-group">
-          <label for="golfers">Number of golfers:
-            <input type="text" id="golfers" class="form-control" ng-model="$ctrl.values.golfers">
-          </label>
-          <label for="clubs">Club rentals:
-            <input type="text" id="clubs" class="form-control" ng-model="$ctrl.values.clubs">
-          </label>
-          <button type="submit" class="btn btn-primary" ng-click="$ctrl.submit()">Submit</button>
+      <div class="col-lg-4">
+        <div class="main-selection-container">
+          <button class="btn main-btn" ng-model="$ctrl.productType" uib-btn-radio="'GolfRentalRide'">Golf + Rental + Ride</button>
+          <button class="btn main-btn" ng-model="$ctrl.productType" uib-btn-radio="'GolfRental'">Golf + Rental</button>
+          <button class="btn main-btn" ng-model="$ctrl.productType" uib-btn-radio="'GolfRide'">Golf + Ride</button>
+          <button class="btn main-btn" ng-model="$ctrl.productType" uib-btn-radio="'RentalRide'">Rental + Ride</button>
+          <button class="btn main-btn" ng-model="$ctrl.productType" uib-btn-radio="'Rental'">Rental Only</button>
+        </div>
+      </div>
+      <div class="main-container-form col-lg-8">
+        <div ng-show="$ctrl.showInputs.golf" class="row main-container-form-input">
+          <div class="col-lg-6 col-md-6 main-container-form-title">Number of golfers:</div>
+          <div class="col-lg-6 col-md-6 main-container-form-dropdown">
+            <select name="golfers" id="golfers" ng-model="$ctrl.values.golfers"
+              ng-options="number.label for number in $ctrl.numbers">
+              <option value="">-- Choose how many Golfers --</options>
+            </select>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Golf Course:</div>
+            <div class="col-lg-6 col-md-6">
+              <select name="courses" id="courses" ng-model="$ctrl.values.course" ng-options="course.label for course in $ctrl.courses">
+                <option value="">-- Choose a golf course --</options>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Date:</div>
+            <div class="col-lg-6 col-md-6 main-datePicker">
+              <div class="input-group">
+                <input id="datePicker" class="form-control" type="text" uib-datepicker-popup ng-required="true"
+                  is-open="$ctrl.datePopUp.opened" datepicker-options="$ctrl.dateOptions"
+                  close-text="Close" ng-model="$ctrl.teeDate" ng-change="$ctrl.updateTeeDate()" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="$ctrl.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Tee time:</div>
+            <div uib-timepicker ng-model="$ctrl.teeTime" ng-change="$ctrl.updateTeeTime()" minute-step="10" class="main-timePicker col-lg-6 col-md-6">
+            </div>
+          </div>
+        </div>
+        <div ng-show="$ctrl.showInputs.rental" class="row main-container-form-input">
+          <div class="col-lg-12 col-md-12 main-container-form-title">Club rentals:</div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Men:</div>
+            <div class="col-lg-6 col-md-6">
+              <select name="menGolfers" id="menGolfers" ng-model="$ctrl.values.menGolfers" ng-options="number.label for number in $ctrl.numbers">
+                <option value="">-- Choose how many Golfers --</options>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Women:</div>
+            <div class="col-lg-6 col-md-6">
+              <select name="womanGolfers" id="womanGolfers"
+                ng-model="$ctrl.values.womanGolfers" ng-options="number.label for number in $ctrl.numbers">
+                <option value="">-- Choose how many Golfers --</options>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Special request:</div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" id="specialRequest" class="form-control"
+                ng-model="$ctrl.values.specialRequest">
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6"></div>
+            <div class="col-lg-6 col-md-6">(Left hand, senior club, etc)</div>
+          </div>
+        </div>
+        <div ng-show="$ctrl.showInputs.ride" class="row main-container-form-input">
+          <div class="col-lg-12 col-md-12 main-container-form-title">Pick-up/drop-off location:</div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Address:</div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" id="address" class="form-control" ng-model="$ctrl.values.address">
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">City:</div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" id="city" class="form-control" ng-model="$ctrl.values.city">
+            </div>
+          </div>
+          <!-- <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Golf Course:</div>
+            <div class="col-lg-6 col-md-6">
+              <select name="courses" id="courses" ng-model="$ctrl.values.course" ng-options="course.label for course in $ctrl.courses">
+                <option value="">-- Choose how a golf course --</options>
+              </select>
+            </div>
+          </div> -->
+        </div>
+        <div class="row main-container-form-input">
+          <div class="col-lg-12 col-md-12 main-container-form-title">Contact:</div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Name:</div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" id="name" class="form-control" ng-model="$ctrl.values.name">
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Email:</div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" id="email" class="form-control" ng-model="$ctrl.values.email">
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 main-container-form-input-sub">
+            <div class="col-lg-6 col-md-6">Phone:</div>
+            <div class="col-lg-6 col-md-6">
+              <input type="text" id="phone" class="form-control" ng-model="$ctrl.values.phone">
+            </div>
+          </div>
+        </div>
+        <div class="row main-container-form-input">
+          <div class="col-lg-7 col-md-7"></div>
+          <div class="col-lg-5 col-md-5">
+            <button type="submit" class="btn main-send-btn" ng-click="$ctrl.submit()">Send book request</button>
+          </div>
+        </div>
+
           <!-- <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="$ctrl.newThing"> -->
           <!-- <span class="input-group-btn" > -->
           <!-- <button type="submit" class="btn btn-primary" ng-click="$ctrl.addThing()">Add New</button> -->
           <!-- </span> -->
-        </p>
       </div>
     </form>
-    <div class="col-lg-4">
-      <div>
+    <div class="col-lg-3">
+      <div class="main-help">
         Need help booking?
-        </br>
-        Phone
-      </div>
-      <div>
-        Your order
-        <div>
+        <div class="main-help-phone">
+          Phone
           <div>
-            # of Golfers: {{$ctrl.values.golfers}}
+            U.S. 415-123-1234
           </div>
           <div>
-            Club Rentals: {{$ctrl.values.clubs}}
+            Kor 010-123-1234
+          </div>
+        </div>
+        <div class="main-help-phone">
+          Kakao ID: Test
+        </div>
+      </div>
+      <div class="main-order-summary">
+        <span class="main-order-summary-title">Your order</span>
+        <div class="main-container">
+          <div class="main-container-form-input">
+            # of Golfers: {{$ctrl.values.golfers.value}}
+          </div>
+          <div class="main-container-form-input">
+            Club Rentals: {{$ctrl.values.menGolfers ? $ctrl.values.menGolfers.value + 'men' : ''}} {{$ctrl.values.womanGolfers.value ? $ctrl.values.womanGolfers.value + 'women': ''}}
+          </div>
+          <div class="main-container-form-input">
+            Pick-up/drop-off:{{$ctrl.values.address + $ctrl.values.city}}
+          </div>
+          <div class="main-container-form-input">
+            Date: {{$ctrl.values.teeDate}}
+          </div>
+          <div class="main-container-form-input">
+            Tee off Time: {{$ctrl.values.teeTime}}
+          </div>
+          <div class="main-container-form-input">
+            Golf course: {{$ctrl.values.course}}
           </div>
         </div>
       </div>
