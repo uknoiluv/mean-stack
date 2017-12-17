@@ -1,10 +1,11 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
+import golfIcons from '../../components/golf-icons/golf-icons.component';
 
 export class MainController {
   $http;
-  socket;
+  // socket;
   awesomeThings = [];
   values = {};
   numbers = [
@@ -61,13 +62,14 @@ export class MainController {
   teeDate = this.dateOptions.minDate;
 
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  // constructor($http, $scope, socket) {
+  constructor($http, $scope) {
     this.$http = $http;
-    this.socket = socket;
+    // this.socket = socket;
 
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
-    });
+    // $scope.$on('$destroy', function() {
+    //   socket.unsyncUpdates('thing');
+    // });
 
     $scope.$watch(function() {
       return $scope.$ctrl.productType;
@@ -103,13 +105,13 @@ export class MainController {
     }, true);
   }
 
-  $onInit() {
-    this.$http.get('/api/things')
-      .then(response => {
-        this.awesomeThings = response.data;
-        this.socket.syncUpdates('thing', this.awesomeThings);
-      });
-  }
+  // $onInit() {
+  //   this.$http.get('/api/things')
+  //     .then(response => {
+  //       this.awesomeThings = response.data;
+  //       this.socket.syncUpdates('thing', this.awesomeThings);
+  //     });
+  // }
 
   // addThing() {
   //   if(this.values.golfers) {
@@ -120,7 +122,10 @@ export class MainController {
 
   submit() {
     if(this.values.golfers) {
-      this.$http.post('/api/things', this.values);
+      this.values.type = this.productType;
+      this.$http.post('/api/reservation', this.values);
+      this.teeTime = this.setStartTeetime();
+      this.teeDate = this.dateOptions.minDate;
       this.values = {};
     }
   }
@@ -135,7 +140,7 @@ export class MainController {
 
   createDateOptions() {
     const now = new Date();
-    const dayInMillis = 24*60*60*1000;
+    const dayInMillis = 24 * 60 * 60 * 1000;
     const minDate = new Date(now.getTime() + dayInMillis);
     const maxDate = new Date(now.getTime() + 122 * dayInMillis);
     return {minDate, maxDate, startingDay: 0};
@@ -146,23 +151,25 @@ export class MainController {
     date.setHours(8);
     date.setMinutes(0);
     return date;
-  }
+    }
 
   updateTeeTime() {
-    const hours = this.teeTime.getHours();
-    const minutes = this.teeTime.getMinutes();
+    const date = new Date();
+    date.setHours(0);
+    date.setMinutes(0);
+    const hours = (this.teeTime || date).getHours();
+    const minutes = (this.teeTime || date).getMinutes();
     const teeTime = `${hours % 12}:${minutes < 10 ? '0': ''}${minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
     this.values.teeTime = teeTime;
   }
 
   updateTeeDate() {
-    console.log('hit');
     const teeDate = this.teeDate.toJSON().slice(0, 10);
     this.values.teeDate = teeDate;
   }
 }
 
-export default angular.module('reposApp.main', [uiRouter])
+export default angular.module('reposApp.main', [uiRouter, golfIcons])
   .config(routing)
   .component('main', {
     template: require('./main.html'),
