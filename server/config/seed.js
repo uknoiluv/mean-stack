@@ -6,6 +6,7 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
+import Reservation from '../api/reservation/reservation.model';
 import config from './environment/';
 
 export default function seedDatabaseIfNeeded() {
@@ -61,6 +62,41 @@ export default function seedDatabaseIfNeeded() {
         })
         .then(() => console.log('finished populating users'))
         .catch(err => console.log('error populating users', err));
+      });
+
+    Reservation.find({}).remove()
+      .then(() => {
+        Reservation.create({
+          Type: 'GolfRental',
+          golfers: 4,
+          course: 'Coyote',
+          teeDate: '2017-12-13',
+          teeTime: '10:00 AM',
+          menClubs: 2,
+          womenClubs: 2,
+          specialRequest: '',
+          address: '123 Test',
+          city: 'Test City',
+          name: 'Abc',
+          email: 'ab@ab.com',
+          phone: '123-512-1232'
+        }, {
+          Type: 'GolfRentalRide',
+          golfers: 2,
+          course: 'Coyote',
+          teeDate: '2017-12-13',
+          teeTime: '10:00 AM',
+          menClubs: 2,
+          womenClubs: 0,
+          specialRequest: '',
+          address: '123 Test',
+          city: 'Test City',
+          name: 'Abc',
+          email: 'cd@ab.com',
+          phone: '123-512-1234'
+        })
+        .then(() => console.log('finished populating reservations'))
+        .catch(err => console.log('error populating reservations', err));
       });
   }
 }

@@ -5,31 +5,30 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
+// const xoauth2 = require('xoauth2');
 
-export default function sendMail(details) {
-  console.log('details', details);
-  let transporter = nodemailer.createTestAccount((err, account) => {
-    let transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: 'raa52wwr6np6wvpt@ethereal.email',
-        pass: 'HTuYvYtr1UqNED7Jma'
-      }
-    });
-    let mailOptions = {
-      to: 'uknoiluv@gmail.com',
-      subject: 'test',
-      text: JSON.stringify(details),
-      html: '<p><b>hello </b> will be there </p>'
-    };
-    transporter.sendMail(mailOptions, (err, info) => {
-      if(err) {
-        return console.log(err);
-      }
-      console.log(`Message sent: ${info.messageId}`);
-      console.log(`Preview URL: %s: ${nodemailer.getTestMessageUrl(info)}`)
-    });
+const send = (details, emailTo = 'adriankim82@gmail.com') => {
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'Oauth2',
+      user: process.env.GOOGLE_USER_EMAIL,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      refreshToken: process.env.GOOGLE_REFRESH_TOKEN
+    }
+  });
+  let mailOptions = {
+    to: emailTo,
+    subject: 'test',
+    text: JSON.stringify(details)
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    if(err) {
+      return console.log(err);
+    }
+    console.log(`Message sent: ${info.messageId}`);    
   });
 };
+
+export {send};

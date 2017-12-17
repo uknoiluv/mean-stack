@@ -1,17 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/things              ->  index
- * POST    /api/things              ->  create
- * GET     /api/things/:id          ->  show
- * PUT     /api/things/:id          ->  upsert
- * PATCH   /api/things/:id          ->  patch
- * DELETE  /api/things/:id          ->  destroy
+ * GET     /api/Reservations              ->  index
+ * POST    /api/Reservations              ->  create
+ * GET     /api/Reservations/:id          ->  show
+ * PUT     /api/Reservations/:id          ->  upsert
+ * PATCH   /api/Reservations/:id          ->  patch
+ * DELETE  /api/Reservations/:id          ->  destroy
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import Thing from './thing.model';
+import reservation from './reservation.model';
 import {send} from '../../components/mailer';
 
 function respondWithResult(res, statusCode) {
@@ -65,56 +65,56 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Things
+// Gets a list of Reservations
 export function index(req, res) {
-  return Thing.find().exec()
+  return reservation.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Thing from the DB
+// Gets a single Reservation from the DB
 export function show(req, res) {
-  return Thing.findById(req.params.id).exec()
+  return reservation.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Thing in the DB
+// Creates a new Reservation in the DB
 export function create(req, res) {
-  // send(req.body);
-  respondWithResult(res, 201)
-  // return Thing.create(req.body)
-  //   .then(respondWithResult(res, 201))
-  //   .catch(handleError(res));
+  send(req.body);
+  console.log('req.body inside create', req.body);
+  return reservation.create(req.body)
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
 }
 
-// Upserts the given Thing in the DB at the specified ID
+// Upserts the given Reservation in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Thing.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return reservation.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing Thing in the DB
+// Updates an existing Reservation in the DB
 export function patch(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Thing.findById(req.params.id).exec()
+  return reservation.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Thing from the DB
+// Deletes a Reservation from the DB
 export function destroy(req, res) {
-  return Thing.findById(req.params.id).exec()
+  return reservation.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
