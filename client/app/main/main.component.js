@@ -151,7 +151,7 @@ export class MainController {
     date.setHours(8);
     date.setMinutes(0);
     return date;
-    }
+  }
 
   updateTeeTime() {
     const date = new Date();
@@ -159,7 +159,7 @@ export class MainController {
     date.setMinutes(0);
     const hours = (this.teeTime || date).getHours();
     const minutes = (this.teeTime || date).getMinutes();
-    const teeTime = `${hours % 12}:${minutes < 10 ? '0': ''}${minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
+    const teeTime = `${hours % 12}:${minutes < 10 ? '0' : ''}${minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
     this.values.teeTime = teeTime;
   }
 
