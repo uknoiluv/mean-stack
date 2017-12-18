@@ -5,11 +5,7 @@ import angular from 'angular';
 
 export class GolfIconsComponent {
 
-  // golf = false;
-  // rental = false;
-  // ride = false;
-
-  constructor($scope) {
+  constructor() {
     'ngInject';
   }
 

@@ -27,7 +27,7 @@ const send = (details, emailTo = 'adriankim82@gmail.com') => {
     if(err) {
       return console.log(err);
     }
-    console.log(`Message sent: ${info.messageId}`);    
+    console.log(`Message sent: ${info.messageId}`);
   });
 };
 
